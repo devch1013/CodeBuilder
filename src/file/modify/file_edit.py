@@ -1,14 +1,10 @@
 import json
 import os
 
-def modify_file(file_info):
+def modify_file(relative_path, start_line, end_line, new_text):
     """
     파일의 내용을 변경
     """
-    relative_path = file_info['relative_path']
-    start_line = file_info['start_line']
-    end_line = file_info['end_line']
-    new_text = file_info['new_text']
 
     # 상대 경로를 절대 경로로 변환
     absolute_path = os.path.abspath(relative_path)
@@ -33,16 +29,18 @@ def modify_file(file_info):
     else:
         print(f"오류: 유효하지 않은 라인 범위입니다. 파일은 {len(lines)}줄입니다.")
 
-# JSON 입력 예시
-json_input = '''
-{
-    "relative_path": "./example.txt",
-    "start_line": 10,
-    "end_line": 15,
-    "new_text": "def new_function():\\n    print('This is a new function')\\n    return True\\n\\n# 이 부분이 새로 추가되었습니다\\nprint('Hello, World!')"
-}
-'''
 
-# JSON 파싱 및 함수 호출
-file_info = json.loads(json_input)
-modify_file(file_info)
+if __name__ == '__main__':
+    # JSON 입력 예시
+    json_input = '''
+    {
+        "relative_path": "./example.txt",
+        "start_line": 10,
+        "end_line": 15,
+        "new_text": "def new_function():\\n    print('This is a new function')\\n    return True\\n\\n# 이 부분이 새로 추가되었습니다\\nprint('Hello, World!')"
+    }
+    '''
+
+    # JSON 파싱 및 함수 호출
+    file_info = json.loads(json_input)
+    modify_file(**file_info)

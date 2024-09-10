@@ -1,100 +1,14 @@
 
-    "env": "bash",
-    "command": "django-admin startproject memoproj"
-},
-{
-    "env": "bash",
-    "command": "cd memoproj"
-},
-{
-    "env": "bash",
-    "command": "python manage.py startapp memoapp"
-},
-{
-    "env": "bash",
-    "command": "mkdir -p memoapp/templates"
-},
-{
-    "env": "bash",
-    "command": "touch memoapp/templates/memo_list.html"
-},
-{
-    "env": "python",
-    "command": """
-# memoproj/settings.py
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'memoapp',
-]
-"""
-},
-{
-    "env": "python",
-    "command": """
-# memoapp/models.py
-from django.db import models
-
-class Memo(models.Model):
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.content[:50]
-"""
-},
-{
-    "env": "python",
-    "command": """
-# memoapp/views.py
-from django.shortcuts import render, redirect
-from .models import Memo
-from django.views import View
-
-class MemoListView(View):
-    def get(self, request):
-        memos = Memo.objects.all().order_by('-created_at')
-        return render(request, 'memo_list.html', {'memos': memos})
-
-    def post(self, request):
-        content = request.POST.get('content')
-        if content:
-            Memo.objects.create(content=content)
-        return redirect('memo_list')
-"""
-},
-{
-    "env": "python",
-    "command": """
-# memoproj/urls.py
-from django.contrib import admin
-from django.urls import path
-from memoapp.views import MemoListView
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', MemoListView.as_view(), name='memo_list'),
-]
-"""
-},
-{
-    "env": "bash",
-    "command": "echo '{% for memo in memos %}<p>{{ memo.content }}</p>{% endfor %}<form method=\"post\"><input type=\"text\" name=\"content\"><input type=\"submit\" value=\"Save\">{% csrf_token %}</form>' > memoapp/templates/memo_list.html"
-},
-{
-    "env": "bash",
-    "command": "python manage.py makemigrations"
-},
-{
-    "env": "bash",
-    "command": "python manage.py migrate"
-},
-{
-    "env": "bash",
-    "command": "python manage.py runserver"
+    console: "django-admin startproject memo_project",
+    console: "cd memo_project",
+    console: "python manage.py startapp memos",
+    modify: "./memo_project/settings.py",
+    modify: "./memo_project/urls.py",
+    create: "./memos/templates/memos/index.html",
+    modify: "./memos/models.py",
+    modify: "./memos/views.py",
+    modify: "./memos/urls.py",
+    console: "python manage.py makemigrations",
+    console: "python manage.py migrate",
+    console: "python manage.py runserver"
 }
-]

@@ -1,9 +1,10 @@
 from src.llm.tool.tool import Tool
-from typing import List, Any
+from src.llm.tool.tool_executor import ToolExecutor
+from src.llm.tool.agent_tools import bash, edit
 
-class ToolAgent:
-    def __init__(self, tools: List[Tool], client: Any) -> None:
-        self.tools = tools
-        self.client = client
-        
-    
+tool = [
+    Tool(bash),
+    Tool(edit)
+]
+
+executor = ToolExecutor(tool)

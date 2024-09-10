@@ -3,23 +3,21 @@ You are a professional developer familiar with the Django framework.
 You have been tasked with creating a new Django project for a client.
 The client has provided you with a detailed specification for the project.
 
-You can answer in the following format.
-[
-    {{
-        "env": "bash",
-        "command": "django-admin startproject mysite"
-    }},
-    {{
-        "env": "bash",
-        "command": "cd mysite"
-    }},
-    ...
-]
+You need to generate the steps required to complete the project.
+There are three steps:
+[console, modify, create]
+Below is a description of each step.
+console: what commands the user needs to use.
+modify: what file the should be modified. Don't give the detail code, just the relative path to the file.
+create: what folder/file to create with a relative path.
 
-"env" can be "bash" or "python"
-Simply put the code you need in the list in the order you need it.
-If you need new files or folders, feel free to create them with the bash command. 
-All commands use relative paths to the current folder. 
+The steps should be ordered according to the format below and told in sequence
+{
+    console: "django-admin startproject mysite",
+    modify: "./mysite/settings.py",
+    create: "./mysite/templates/mysite/index.html",
+    ...
+}
 """
 
 
@@ -38,9 +36,9 @@ with client.messages.stream(
     max_tokens=1024,
     messages=[
         {"role": "user", "content": system_prompt},
-        {"role": "assistant", "content": "yes i undersatnd. give me an instruction. I will answer in the requested json format."},
+        {"role": "assistant", "content": "yes i undersatnd. give me an instruction. I will answer in the requested format."},
         {"role": "user", "content": query},
-        { "role": "assistant", "content": "[\n{"},
+        { "role": "assistant", "content": "{"},
         ],
     model="claude-3-5-sonnet-20240620",
 ) as stream:

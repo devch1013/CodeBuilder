@@ -1,6 +1,6 @@
 import os
 import ast
-import inspect
+from src.file.modify.file_edit import modify_file
 
 class FileWatcher:
     def __init__(self, base_path):
@@ -79,6 +79,10 @@ class FileWatcher:
             if isinstance(item, ast.ClassDef):
                 classes[item.name] = ast.get_docstring(item)
         return classes
+    
+    def modify(file_input: dict):
+        modify_file(**file_input)
+        
 
 # 사용 예시
 if __name__ == "__main__":

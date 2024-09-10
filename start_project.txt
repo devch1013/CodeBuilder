@@ -1,0 +1,14 @@
+console", "django-admin startproject memo_project"],
+["console", "cd memo_project"],
+["console", "python manage.py startapp memo"],
+["modify", "./memo_project/settings.py"],
+["modify", "./memo_project/urls.py"],
+["create", "./memo/models.py"],
+["create", "./memo/views.py"],
+["create", "./memo/urls.py"],
+["create", "./memo/forms.py"],
+["create", "./memo/templates/memo/index.html"],
+["console", "python manage.py makemigrations"],
+["console", "python manage.py migrate"],
+["console", "python manage.py runserver"]
+]
