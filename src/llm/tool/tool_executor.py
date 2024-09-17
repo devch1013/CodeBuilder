@@ -12,7 +12,7 @@ class Command(Enum):
 
 class ToolExecutor:
     def __init__(self, tools: List[Tool]) -> None:
-        self.file_watcher = FileWatcher(base_path="./")
+        self.file_watcher = FileWatcher(current_dir="./")
         self.tools = tools
         
     def gateway(self, command: str, value: Any):

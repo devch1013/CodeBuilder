@@ -3,12 +3,14 @@ import ast
 from src.file.modify.file_edit import modify_file
 
 class FileWatcher:
-    def __init__(self, base_path):
-        self.base_path = base_path
+    def __init__(self, current_dir):
+        self.current_dir = current_dir
 
+    def change_dir(self, relative_path):
+        self.current_dir = os.path.join(self.current_dir, relative_path)
 
     def seek(self, relative_path=""):
-        path = os.path.join(self.base_path, relative_path)
+        path = os.path.join(self.current_dir, relative_path)
         return self._get_structure(path)
 
     def _get_structure(self, path):
@@ -24,8 +26,8 @@ class FileWatcher:
                 result[item] = None
         return result
 
-    def print(self, realtive_path=""):
-        return self._print_structure(self.seek(relative_path=realtive_path))
+    def print(self, relative_path=""):
+        return self._print_structure(self.seek(relative_path=relative_path))
 
     def _print_structure(self, structure, indent=""):
         result = ""
@@ -43,11 +45,11 @@ class FileWatcher:
         return result
 
     def get_functions(self, file_path):
-        full_path = os.path.join(self.base_path, file_path)
+        full_path = os.path.join(self.current_dir, file_path)
         return self._get_functions_and_docstrings(full_path)
 
     def get_classes(self, file_path):
-        full_path = os.path.join(self.base_path, file_path)
+        full_path = os.path.join(self.current_dir, file_path)
         return self._get_classes_and_docstrings(full_path)
 
     def _get_functions_and_docstrings(self, file_path):

@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from src.generate_steps import generate_steps
+from step_manager import generate_steps
 
 load_dotenv(".env")
 

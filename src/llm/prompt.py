@@ -5,15 +5,15 @@ The client has provided you with a detailed specification for the project.
 
 You need to generate the steps required to complete the project.
 There are three steps:
-[console, modify, create]
+[command, modify, create]
 Below is a description of each step.
-console: what commands the user needs to use.
+command: what commands the user needs to use.
 modify: what file the should be modified. Don't give the detail code, just the relative path to the file.
 create: what folder/file to create with a relative path.
 
 The steps must follow the format below
 [
-    ["console", "django-admin startproject mysite"],
+    ["command", "django-admin startproject mysite"],
     ["modify", "./mysite/settings.py"],
     ["create", "./mysite/templates/mysite/index.html"],
     ...
