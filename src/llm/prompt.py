@@ -28,9 +28,6 @@ The steps given below are the complete steps of the project you are building.
 
 You need to perform this line: {step_on_now}
 
-Below is the content of that file. The code is given with the line number.
-{file_content}
-
 Here you need to print out what you need to modify from line number to line number of the file.
 The output format follows below. 
 [
@@ -40,4 +37,6 @@ The output format follows below.
         "new_text": "def new_function():\\n    print('This is a new function')\\n    return True\\n\\n# This part is newly added\\nprint('Hello, World!')"
     }}, ...
 ]
+
+User will give you the content of that file. The code is given with the line number.
 """

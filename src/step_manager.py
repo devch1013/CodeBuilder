@@ -19,13 +19,14 @@ class StepManager:
     def __init__(self, llm: LLM):
         self.llm = llm
         self.steps: List[List[str]] = None
+        self.last_steps: List[List[str]] = []
 
     def get_step(self, query):
         start_token = '[\n["'
         result = self.llm.run(prompt.start_project, query, start_token)
         print("result: ", result)
-        step_string = start_token + result
-        self.steps = extract_list_from_string(step_string)
+        # step_string = start_token + result
+        # self.steps = extract_list_from_string(result)
         return self.steps
 
     def get_fake_step(self, query):
@@ -54,6 +55,7 @@ class StepManager:
         if self.steps is [] or self.steps is None:
             return None
         next_step = self.steps.pop(0)
+        self.last_steps.append(next_step)
         print("next_step: ", next_step)
 
         if next_step[0] == StepType.MODIFY.value:
@@ -64,6 +66,15 @@ class StepManager:
             if next_step[1].split()[0] == StepType.CD.value:
                 return StepType.CD, next_step[1].split()[1]
         return StepType.COMMAND, next_step[1]
+    
+    def get_last_steps(self):
+        content = ""
+        for step in self.last_steps[:-1]:
+            content += f"{step[0]}: {step[1]}\n"
+        return content
+    
+    def get_current_step(self):
+        return f"{self.last_steps[-1][0]}: {self.last_steps[-1][1]}"
 
 
 if __name__ == "__main__":

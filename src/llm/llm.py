@@ -4,6 +4,7 @@ import dotenv
 dotenv.load_dotenv(".env")
 
 from anthropic import Anthropic
+from src.util import extract_list_from_string
 
 
 class LLM:
@@ -11,6 +12,9 @@ class LLM:
         self.llm = llm
 
     def run(self, system_prompt, query, start_token):
+        pass
+    
+    def parse(self, query):
         pass
 
 
@@ -29,5 +33,5 @@ class Claude(LLM):
             ],
             model="claude-3-5-sonnet-20240620",
         )
-
-        return message.content[0].text
+        print("LLM response: ", message.content[0].text)
+        return extract_list_from_string(start_token+message.content[0].text)

@@ -5,9 +5,11 @@ from src.file.modify.file_edit import modify_file
 class FileWatcher:
     def __init__(self, current_dir):
         self.current_dir = current_dir
+        os.chdir(current_dir)
 
     def change_dir(self, relative_path):
         self.current_dir = os.path.join(self.current_dir, relative_path)
+        os.chdir(self.current_dir)
 
     def seek(self, relative_path=""):
         path = os.path.join(self.current_dir, relative_path)
@@ -82,8 +84,25 @@ class FileWatcher:
                 classes[item.name] = ast.get_docstring(item)
         return classes
     
-    def modify(file_input: dict):
-        modify_file(**file_input)
+    def modify(self, file, modify_dict: dict):
+        modify_file(relative_path=file, **modify_dict)
+        
+    def get_file_content(self, file_path, with_line_number=False):
+        try:
+            with open(file_path, 'r', encoding='utf-8') as file:
+                lines = file.readlines()
+            
+            if with_line_number:
+                # 라인 번호 추가
+                numbered_lines = [f"{i+1}: {line.rstrip()}" for i, line in enumerate(lines)]
+                content = "\n".join(numbered_lines)
+            else:
+                # 라인 번호 없이 원본 내용 유지
+                content = "".join(lines)
+            
+            return content
+        except FileNotFoundError:
+            return f"오류: '{file_path}' 파일을 찾을 수 없습니다."
         
 
 # 사용 예시
